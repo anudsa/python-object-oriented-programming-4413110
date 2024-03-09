@@ -1,30 +1,29 @@
 # Python Object Oriented Programming by Joe Marini course example
 # Understanding class inheritance
-
-
-class Book:
+#Super class 1
+class Publication:
+    def __init__(self,title,price):
+        self.title=title
+        self.price=price
+#Super class 2
+class Periodical(Publication):
+    def __init__(self,title,price,publisher,period):
+        super().__init__(title,price)
+        self.publisher=publisher
+        self.period=period
+#We have the book class inherit from the publication class
+class Book(Publication):
     def __init__(self, title, author, pages, price):
-        self.title = title
-        self.price = price
+        #Then the super class is initialized
+        super().__init__(title,price)
         self.author = author
         self.pages = pages
-
-
-class Magazine:
+class Magazine(Periodical):
     def __init__(self, title, publisher, price, period):
-        self.title = title
-        self.price = price
-        self.period = period
-        self.publisher = publisher
-
-
-class Newspaper:
+        super().__init__(title,price, publisher,period)
+class Newspaper(Periodical):
     def __init__(self, title, publisher, price, period):
-        self.title = title
-        self.price = price
-        self.period = period
-        self.publisher = publisher
-
+        super().__init__(title,price, publisher,period)
 
 b1 = Book("Brave New World", "Aldous Huxley", 311, 29.0)
 n1 = Newspaper("NY Times", "New York Times Company", 6.0, "Daily")
