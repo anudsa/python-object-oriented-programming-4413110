@@ -1,12 +1,8 @@
-# Python Object Oriented Programming by Joe Marini course example
 # Programming challenge: add methods for comparison and equality
-
 # Challenge: use a magic method to make stocks and bonds sortable
 # Stocks should sort from low to high on price
 # Bonds should sort from low to high on yield
-
 from abc import ABC, abstractmethod
-
 
 class Asset(ABC):
     def __init__(self, price):
@@ -16,21 +12,26 @@ class Asset(ABC):
     def __str__(self):
         pass
 
-
 class Stock(Asset):
     def __init__(self, ticker, price, company):
         super().__init__(price)
         self.company = company
         self.ticker = ticker
-
-
+    def __str__(self):
+        return f"{self.ticker}: {self.company} -- ${self.price}"
+    def __lt__(self,value:object) -> bool:
+        return (self.price<value.price)
+    
 class Bond(Asset):
-    def __init__(self, price, description, duration, yieldamt):
+    def __init__(self, price, description, duration, yieldPercentage):
         super().__init__(price)
         self.description = description
         self.duration = duration
-        self.yieldamt = yieldamt
-
+        self.yieldPercentage = yieldPercentage
+    def __str__(self):
+        return f"{self.description}: {self.duration} yr: ${self.price}: {self.yieldPercentage}%"
+    def __lt__(self,value:object)-> bool:
+        return (self.yieldPercentage<value.yieldPercentage)
 
 # ~~~~~~~~~ TEST CODE ~~~~~~~~~
 stocks = [
@@ -46,10 +47,8 @@ bonds = [
     Bond(98.65, "5 Year US Treasury", 5, 4.43),
     Bond(99.57, "2 Year US Treasury", 2, 4.98)
 ]
-
 stocks.sort()
 bonds.sort()
-
 for stock in stocks:
     print(stock)
 print("-----------")
